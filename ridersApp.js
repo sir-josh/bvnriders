@@ -37,8 +37,8 @@ function payWithRave() {
                 const appfee = parseFloat(response.data.data.appfee);
                 const amount = parseFloat(response.data.data.amount);
                 const diff = amount - appfee;
-                const netIncome = diff * 0.1;
-                const driverIncome = diff - netIncome;
+                const netIncome = (diff * 0.1).toFixed(2);
+                const driverIncome = (diff - netIncome).toFixed(2);
 
                 let keysToRemove = ['appfee','amount','driverIncome','netIncome'];
 
@@ -48,7 +48,7 @@ function payWithRave() {
                 localStorage.setItem('amount', amount);
                 localStorage.setItem('driverIncome', driverIncome);
                 localStorage.setItem('netIncome', netIncome);
-
+               
                console.log('payment successful');
                // redirect to a success page
                window.location.replace("rider.success.html");
@@ -61,7 +61,8 @@ function payWithRave() {
         }
     });
 }
-if (window.location.href == 'http://localhost:5500/rider.success.html'){
+
+if (window.location.href.includes("rider.success.html")){
     document.querySelector('#amountReceived').innerHTML = '&#x20A6;'+ localStorage.getItem('amount');
     document.querySelector('#appFee').innerHTML = '&#x20A6;'+ localStorage.getItem('appfee');
     document.querySelector('#companyNetIncome').innerHTML = '&#x20A6;'+ localStorage.getItem('netIncome');

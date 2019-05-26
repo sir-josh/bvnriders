@@ -62,6 +62,8 @@ document.querySelector('#submit-btn').addEventListener('click', function(e){
                         feedback.innerHTML = "";
                     },3000);
                 }
+            }).catch(err =>{
+                showAlert(err);
             });
     }else{
         //This Checks for empty input and prompt the user to insert BVN 
@@ -80,3 +82,37 @@ document.querySelector('#submit-btn').addEventListener('click', function(e){
 
     e.preventDefault();
 })
+
+
+
+//Clear alert message
+function clearAlert(){
+    const currentAlert = document.querySelector('.alert');
+    if(currentAlert){
+        currentAlert.remove();
+    }
+}
+
+//Show alert message
+function showAlert(msg){
+    //First clear any current alert message before showing another one
+    clearAlert();
+
+    //create a div element
+    const div = document.createElement('div');
+    //Add neccessary classes to the div
+    div.className = 'alert alert-danger';
+    //Add the text content inside the div
+    div.appendChild(document.createTextNode(msg + ', please do try again'));
+    //Get a parent element and child element
+    const searchContainer = document.querySelector('.row');
+    const parentContainer = document.querySelector('.container');
+    //Insert the alert div between the parent and child element
+    parentContainer.insertBefore(div, searchContainer);
+    //Timeout the alert to disappear after 2 seconds
+    setTimeout(() => {
+        clearAlert();
+        //remove loader
+        document.getElementById('loader').style.display = 'none';
+    },3500);
+}
